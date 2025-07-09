@@ -4,17 +4,14 @@ from discord.ext import commands
 from main import FusionBrainAPI
 from config import TOKEN, API_KEY, SECRET_KEY
 
-# Inisialisasi bot
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# COMMAND: !start
 @bot.command()
 async def start(ctx):
     await ctx.send(f"Heyyyaaa, {ctx.author.name}. Gunakan `!help_me` untuk melihat perintah yang tersedia.")
 
-# COMMAND: !help_me
 @bot.command()
 async def help_me(ctx):
     await ctx.send(
@@ -24,7 +21,7 @@ async def help_me(ctx):
         "`!art <prompt>` - Buat gambar dari teks"
     )
 
-# COMMAND: !art <prompt>
+#text tapi ada awalan art
 @bot.command()
 async def art(ctx, *, prompt: str):
     api = FusionBrainAPI(
@@ -45,6 +42,7 @@ async def art(ctx, *, prompt: str):
 
             with open(filepath, "rb") as photo:
                 await ctx.send(file=discord.File(photo, filepath))
+                await ctx.send("Gambarmu sudah jadi!")
 
             os.remove(filepath)
     except Exception as e: #kalo error
